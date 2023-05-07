@@ -28,3 +28,21 @@ def tags(request):
         context=contexto,
     )
     return http_response
+
+def profile(request):
+    contexto = {}
+    http_response = render(
+        request=request,
+        template_name='control_usuarios/profile.html',
+        context=contexto,
+    )
+    return http_response
+
+def users(request):
+    contexto = {}
+    http_response = render(
+        request=request,
+        template_name='control_usuarios/users.html',
+        context=contexto,
+    )
+    return http_response

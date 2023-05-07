@@ -116,16 +116,17 @@
           </div>
           <!-- links del medio -->
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Inicio</a></li>
-                <li><a href="#" class="nav-link px-2">Perfil</a></li>
+                <li><a href="{% url 'Home' %}" class="nav-link px-2 link-secondary">Inicio</a></li>
+                <li><a href="{% url 'Perfil' %}" class="nav-link px-2">Perfil</a></li>
                 <li><a href="#" class="nav-link px-2">Posts</a></li>
-                <li><a href="#" class="nav-link px-2">Etiquetas</a></li>
-                <li><a href="#" class="nav-link px-2">Acerca de</a></li>
+                <li><a href="{% url 'Usuarios' %}" class="nav-link px-2">Usuarios</a></li>
+                <li><a href="{% url 'Etiquetas' %}" class="nav-link px-2">Etiquetas</a></li>
+                <li><a href="{% url 'Acerca de' %}" class="nav-link px-2">Acerca de</a></li>
           </ul>
           <!-- botones de la derecha -->
           <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+                <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='{% url 'Ingresar' %}';">Login</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'Registrarse' %}';">Sign-up</button>
           </div>
         </header>
         </div>
@@ -149,7 +150,7 @@
         </div>
       </main>
     <!-- Bootstrap core JS-->
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <!-- Core theme JS-->
     <script src="{% static 'js/scripts.js' %}"></script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
