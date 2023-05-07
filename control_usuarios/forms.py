@@ -1,8 +1,8 @@
 from django import forms
+from django.core.validators import validate_slug, MinLengthValidator
 
+class Userform(forms.Form):
 
-# widget=forms.PasswordInput()
-
-# class CursoFormulario(forms.Form):
-#     nombre = forms.CharField(required=True, max_length=64) 
-#     comision = forms.IntegerField(required=True, max_value=50000)
+    mail = forms.EmailField(required=True)
+    usuario = forms.CharField(max_length=20, validators=[MinLengthValidator(4)], required=True)
+    password = forms.CharField(max_length=15, validators=[MinLengthValidator(8)], widget=forms.PasswordInput(), required=True)

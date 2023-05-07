@@ -7,4 +7,5 @@ urlpatterns = [
     path('tags/', views.tags, name="Etiquetas"),
     path('profile/', views.profile, name="Perfil"),
     path('users/', views.users, name="Usuarios"),
+    path('sign-succ/', views.signsucc, name="Registro exitoso"),
 ]
