@@ -70,6 +70,21 @@ def users(request):
     )
     return http_response
 
+def users_search(request):
+    if request.method == "POST":
+        data = request.POST
+        busqueda = data["busqueda"]
+        users = User.objects.filter(usuario__contains=busqueda)
+        contexto = {
+            "usuario": users,
+        }
+        http_response = render(
+        request=request,
+        template_name='control_usuarios/users.html',
+        context=contexto,
+        )
+        return http_response
+
 def signsucc(request):
     contexto = {}
     http_response = render(

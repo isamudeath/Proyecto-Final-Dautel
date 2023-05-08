@@ -1,5 +1,5 @@
 {% extends "control_usuarios/base1.html" %}
-
+{% load static %}
 {% block contenido %}
 <section>
     <div>
@@ -12,7 +12,7 @@
                 <br><br>
                 <input type="password" placeholder="Contraseña" name="password" minlength="8" maxlength="15">
                 <br><br>
-                <input type="submit" value="Enviar">
+                <button class="btn btn-primary rounded-pill px-3" type="submit" value="Enviar">Enviar</button>
                 {{ userform.errors }}
             </form>
         </h1>

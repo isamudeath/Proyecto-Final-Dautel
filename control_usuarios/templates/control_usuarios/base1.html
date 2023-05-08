@@ -85,6 +85,25 @@
       .bd-mode-toggle {
         z-index: 1500;
       }
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
     </style>
 
   </head>
@@ -119,7 +138,7 @@
                 <li><a href="{% url 'Home' %}" class="nav-link px-2 link-secondary">Inicio</a></li>
                 <li><a href="{% url 'Perfil' %}" class="nav-link px-2">Perfil</a></li>
                 <li><a href="#" class="nav-link px-2">Posts</a></li>
-                <li><a href="{% url 'Etiquetas' %}" class="nav-link px-2">Usuarios</a></li>
+                <li><a href="{% url 'Usuarios' %}" class="nav-link px-2">Usuarios</a></li>
                 <li><a href="{% url 'Etiquetas' %}" class="nav-link px-2">Etiquetas</a></li>
                 <li><a href="{% url 'Acerca de' %}" class="nav-link px-2">Acerca de</a></li>
           </ul>

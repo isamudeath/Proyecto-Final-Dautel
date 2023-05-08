@@ -4,6 +4,18 @@
 <section>
     <div>
         <h1><p style="text-align:center">Usuarios</p></h1>
+        <br><br>
+        <form action="{% url 'Busqueda' %}" method="post" style="text-align:center">
+            {% csrf_token %}
+            <input type="text" name="busqueda" placeholder="Buscar usuario">
+            <button class="btn btn-primary rounded-pill px-3" type="submit" value="Buscar">Buscar</button>
+        </form>
+        <br>
+        <ul>
+            {% for users in usuario %}
+            <li>{{ users.usuario }}</li>
+            {% endfor %}
+        </ul>
     </div>
 </section>
 {% endblock contenido %}
