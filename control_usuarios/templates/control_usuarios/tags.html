@@ -1,9 +1,24 @@
 {% extends "control_usuarios/base1.html" %}
-
+{% load static %}
 {% block contenido %}
 <section>
     <div>
         <h1><p style="text-align:center">Etiquetas</p></h1>
+        <br>
+        <div>
+            <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Agregar etiqueta' %}';">Crear etiqueta</button>
+            <form action="{% url 'Busqueda Etiqueta' %}" method="post" style="padding-right: 5% padding-top: 10%; text-align:right">
+                {% csrf_token %}
+                <input type="text" name="busqueda" placeholder="Buscar etiqueta">
+                <button class="btn btn-secondary" type="submit" value="Buscar">Buscar</button>
+            </form>
+        </div>
+        <br><br>
+        <ul>
+            {% for tags in nombre %}
+            <li><b>{{ tags.nombre }} </b><i>- Creada por: {{ tags.autor }}</i></li>
+            {% endfor %}
+        </ul>
     </div>
 </section>
 {% endblock contenido %}

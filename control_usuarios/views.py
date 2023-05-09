@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
 
-from control_usuarios.models import User
-from control_usuarios.forms import Userform
+from control_usuarios.models import User, Etiqueta
+from control_usuarios.forms import Userform, Tagform
 
 def signup(request):
     if request.method == "POST":
@@ -44,10 +44,64 @@ def login(request):
     return http_response
 
 def tags(request):
-    contexto = {}
+    contexto = {
+        "tags": Etiqueta.objects.all(),
+    }
     http_response = render(
         request=request,
         template_name='control_usuarios/tags.html',
+        context=contexto,
+    )
+    return http_response
+
+def add_tag(request):
+    if request.method == "POST":
+        tagform = Tagform(request.POST)
+        if tagform.is_valid():
+            data = tagform.cleaned_data
+            nombre = data["nombre"]
+            tag = Etiqueta(nombre=nombre)
+            tag.save()
+            url_success = reverse('Creacion exitosa')
+            return redirect(url_success)
+        else:
+            tagform = Tagform(initial=request.POST)
+            http_response = render(
+            request=request,
+            template_name='control_usuarios/addtag.html',
+            context={'tagform': tagform}
+            )
+            return http_response
+    else:
+        tagform = Tagform()
+        http_response = render(
+            request=request,
+            template_name='control_usuarios/addtag.html',
+            context={'tagform': tagform}
+        )
+        return http_response
+
+def tag_search(request):
+    if request.method == "POST":
+        data = request.POST
+        busqueda = data["busqueda"]
+        tags = Etiqueta.objects.filter(nombre__contains=busqueda)
+        contexto = {
+            "nombre": tags,
+            "autor": tags,
+        }
+        http_response = render(
+        request=request,
+        template_name='control_usuarios/tags.html',
+        context=contexto,
+        )
+        return http_response
+
+def tagsucc(request):
+    contexto = {}
+    http_response = render(
+        request=request,
+        template_name='control_usuarios/tag-succ.html',
         context=contexto,
     )
     return http_response
