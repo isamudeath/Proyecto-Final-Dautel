@@ -22,5 +22,6 @@ urlpatterns = [
     path("", inicio, name="Home"),
     path('admin/', admin.site.urls),
     path('control_usuarios/', include('control_usuarios.urls')),
-    path('acerca-de/', about, name="Acerca de")
+    path('acerca-de/', about, name="Acerca de"),
+    path('posts/', include('posts.urls')),
 ]
