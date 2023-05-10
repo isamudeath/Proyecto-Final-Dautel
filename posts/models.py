@@ -8,7 +8,7 @@ class Post(models.Model):
     imagenes = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
     etiqueta = models.CharField(max_length=10, validators=[validate_slug])
     autor = models.CharField(max_length=20, default="unsigned_user", editable=False)
-    fecha = models.DateField(auto_now_add=True)
+    fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.titulo}\nAutor: {self.autor}\nPublicado en: {self.fecha}"

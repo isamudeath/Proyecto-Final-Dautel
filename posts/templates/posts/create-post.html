@@ -1,0 +1,19 @@
+{% extends "control_usuarios/base1.html" %}
+{% load static %}
+{% block contenido %}
+<section>
+    <div>
+        <h1 style="text-align:center">
+            <form action="{% url 'Crear Post' %}" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" placeholder="Titulo del Post" name="titulo" minlength="1" maxlength="256">
+                <br>
+                <textarea class="form-control" id="contenido" placeholder="Cuentanos sobre tu post..." name="contenido" minlength="1" maxlength="4000" rows="4" cols="50"></textarea>
+                <br>
+                <button class="btn btn-primary rounded-pill px-3" type="submit" value="Crear">Crear</button>
+                {{ userform.errors }}
+            </form>
+        </h1>
+    </div>
+</section>
+{% endblock contenido %}
