@@ -1,21 +1,26 @@
 {% extends "control_usuarios/base1.html" %}
 {% load static %}
 {% block contenido %}
-<section>
-    <div>
-        <h1 style="text-align:center">
-            <form action="{% url 'Registrarse' %}" method="post">
-                {% csrf_token %}
-                <input type="email" placeholder="E-mail" name="mail">
-                <br><br>
-                <input type="text" placeholder="Usuario" name="usuario" minlength="4" maxlength="20">
-                <br><br>
-                <input type="password" placeholder="Contraseña" name="password" minlength="8" maxlength="15">
-                <br><br>
-                <button class="btn btn-primary rounded-pill px-3" type="submit" value="Enviar">Enviar</button>
-                {{ userform.errors }}
-            </form>
-        </h1>
-    </div>
+<section style="text-align:center" >
+    <form action="{% url 'Registrarse' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">E-mail</span>
+            <input class="form-control" type="email" name="mail" required>
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Usuario</span>
+            <input class="form-control" type="text" name="usuario" minlength="4" maxlength="20" required>
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Contraseña</span>
+            <input class="form-control" type="password" name="password" minlength="8" maxlength="15" required>
+        </div>
+        <br>
+        <button class="btn btn-primary rounded-pill px-3" type="submit" value="Enviar">Enviar</button>
+        {{ userform.errors }}
+    </form>
 </section>
 {% endblock contenido %}

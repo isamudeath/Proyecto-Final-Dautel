@@ -3,15 +3,16 @@
 {% block contenido %}
 <section>
     <div>
-        <h1 style="text-align:center">
-            <form action="{% url 'Agregar etiqueta' %}" method="post">
-                {% csrf_token %}
-                <input type="text" placeholder="Etiqueta" name="nombre" minlength="1" maxlength="10">
-                <br><br>
-                <button class="btn btn-primary rounded-pill px-3" type="submit" value="Enviar">Enviar</button>
-                {{ userform.errors }}
-            </form>
-        </h1>
+        <form action="{% url 'Agregar etiqueta' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Etiqueta</span>
+                <input type="text" name="nombre" minlength="1" maxlength="10" required>
+            </div>
+            <br>
+            <button class="btn btn-primary rounded-pill px-3" type="submit" value="Crear">Crear</button>
+            {{ userform.errors }}
+        </form>
     </div>
 </section>
 {% endblock contenido %}

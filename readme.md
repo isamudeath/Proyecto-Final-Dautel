@@ -11,13 +11,24 @@
 ```
 pip install -r requirements.txt
 ```
+---
+## Secciones y Funcionalidades
 
-## Instrucciones para entrar al panel aministrativo de Django
-+ En consola, crear un superuser:
-```
-python manage.py createsuperuser
-```
-+ Acceder con user y password via:
-```
-127.0.0.1:8000/admin
-```
+### Tab "Inicio"
++ Esta tab es el Home de la página
+
+### Tab "Posts"
++ En esta sección podemos crear Posts, por el momento solo se puede ingresar texto
++ En el futuro se mostraras también los últimos N Posts creados
+
+### Tab "Usuarios"
++ Aquí podremos efectuar una búsqueda de usuarios en la DB por nombre de usuario
+
+### Tab "Etiquetas"
++ En esta tab podemos iniciar el proceso de creado de una etiqueta o buscar una etiqueta en la DB
++ Haciendo click en "Crear" nos redireccionará al formulario de creación
+
+### Sign-up
++ El botón Sign-up nos llevara al formulario de registro, todos los campos son obligatorios
+---
+*Las tabs Perfil, Acerca de y el botón Login no están implementados aún y contienen solo un placeholder*
