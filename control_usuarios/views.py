@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 from control_usuarios.models import User, Etiqueta
 from control_usuarios.forms import Userform, Tagform
@@ -9,20 +11,17 @@ def signup(request):
     if request.method == "POST":
         userform = Userform(request.POST)
         if userform.is_valid():
-            data = userform.cleaned_data
-            mail = data["mail"]
-            usuario = data["usuario"]
-            password = data["password"]
-            user = User(mail=mail, usuario=usuario, password=password)
-            user.save()
+            userform.save()
             url_success = reverse('Registro exitoso')
             return redirect(url_success)
         else:
+            for field, errors in userform.errors.items():
+                messages.error(request, f"{', '.join(errors)}")
             userform = Userform(initial=request.POST)
             http_response = render(
-            request=request,
-            template_name='control_usuarios/signup.html',
-            context={'userform': userform}
+                request=request,
+                template_name='control_usuarios/signup.html',
+                context={'userform': userform}
             )
             return http_response
     else:

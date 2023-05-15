@@ -7,8 +7,8 @@ class User(models.Model):
 
     nombre = models.CharField(max_length=40, validators=[validate_slug])
     apellido = models.CharField(max_length=40, validators=[validate_slug])
-    mail = models.EmailField(unique=True)
-    usuario = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=15, validators=[MinLengthValidator(8)])
 
     def __str__(self):

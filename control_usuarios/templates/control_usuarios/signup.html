@@ -1,26 +1,39 @@
 {% extends "control_usuarios/base1.html" %}
 {% load static %}
 {% block contenido %}
-<section style="text-align:center" >
+<section style="text-align:center">
+    <h2>Registro</h2>    
+    {% if messages %}
+    <ul class="messages" style="text-align:left">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <form action="{% url 'Registrarse' %}" method="post">
         {% csrf_token %}
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">E-mail</span>
-            <input class="form-control" type="email" name="mail" required>
+            <span class="input-group-text">E-mail</span>
+            <input class="form-control" type="email" name="email" required>
         </div>
         <br>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Usuario</span>
-            <input class="form-control" type="text" name="usuario" minlength="4" maxlength="20" required>
+            <span class="input-group-text">Usuario</span>
+            <input class="form-control" type="text" name="username" minlength="4" maxlength="20" required>
         </div>
         <br>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Contraseña</span>
-            <input class="form-control" type="password" name="password" minlength="8" maxlength="15" required>
+            <span class="input-group-text">Contraseña</span>
+            <input class="form-control" type="password" name="password1" minlength="8" maxlength="15" required>
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Confirme la contraseña</span>
+            <input class="form-control" type="password" name="password2" minlength="8" maxlength="15" required>
         </div>
         <br>
         <button class="btn btn-primary rounded-pill px-3" type="submit" value="Enviar">Enviar</button>
-        {{ userform.errors }}
+        {{form.errors}}
     </form>
 </section>
 {% endblock contenido %}
