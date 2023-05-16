@@ -127,9 +127,9 @@ def users_search(request):
     if request.method == "POST":
         data = request.POST
         busqueda = data["busqueda"]
-        users = User.objects.filter(usuario__contains=busqueda)
+        users = User.objects.filter(username__contains=busqueda)
         contexto = {
-            "usuario": users,
+            "username": users,
         }
         http_response = render(
         request=request,

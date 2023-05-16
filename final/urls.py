@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pe3.views import inicio, about
+from final.views import inicio, about
 
 urlpatterns = [
     path("", inicio, name="Home"),
