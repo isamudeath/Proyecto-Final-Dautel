@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from control_usuarios.models import User, Etiqueta
+from control_usuarios.models import Etiqueta
 from control_usuarios.forms import Userform, Tagform
 
 def signup(request):
