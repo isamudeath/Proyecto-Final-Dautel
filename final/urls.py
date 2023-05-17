@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from final.views import inicio, about
 
+#Para imagenes
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("", inicio, name="Home"),
     path('admin/', admin.site.urls),
@@ -25,3 +29,5 @@ urlpatterns = [
     path('acerca-de/', about, name="Acerca de"),
     path('posts/', include('posts.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
