@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth import login, authenticate
 
 from control_usuarios.models import Etiqueta
 from control_usuarios.forms import Userform, Tagform
@@ -34,14 +36,31 @@ def signup(request):
         )
         return http_response
 
-def login(request):
-    contexto = {}
-    http_response = render(
-        request=request,
-        template_name='control_usuarios/login.html',
-        context=contexto,
-    )
-    return http_response
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            usuario = data.get('username')
+            password = data.get('password')
+            user = authenticate(username=usuario, password=password)
+            # user puede ser un usuario o None
+            if user:
+                login(request=request, user=user)
+                url_success = reverse('Home')
+                return redirect(url_success)
+    else:  # GET
+        form = AuthenticationForm()
+        http_response = render(
+            request=request,
+            template_name='control_usuarios/login.html',
+            context={'form': form},
+        )
+        return http_response
+    
+class CustomLogoutView(LogoutView):
+   template_name = 'control_usuarios/logout.html'
+
 
 def tags(request):
     contexto = {

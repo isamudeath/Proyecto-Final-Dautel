@@ -3,9 +3,29 @@
 {% load static %}
 
 {% block contenido %}
-<section>
-    <div>
-        <h1><p style="text-align:center">Login</p></h1>
-    </div>
+<section style="text-align:center">
+    <h2>Login</h2>    
+    {% if messages %}
+    <ul class="messages" style="text-align:left">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text">Usuario</span>
+            <input class="form-control" type="text" name="username" maxlength="20" required>
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Contraseña</span>
+            <input class="form-control" type="password" name="password" maxlength="15" required>
+        </div>
+        <br>
+        <button class="btn btn-primary rounded-pill px-3" type="submit" value="Iniciar Sesión">Iniciar Sesión</button>
+        {{form.errors}}
+    </form>
 </section>
 {% endblock contenido %}

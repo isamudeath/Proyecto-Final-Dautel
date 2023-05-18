@@ -1,0 +1,11 @@
+{% extends "control_usuarios/base1.html" %}
+
+{% block contenido %}
+<section style="text-align:center">
+    <div>
+        <h1><p>Se cerro la sesión correctamente!</p></h1>
+        <br>
+        <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Home' %}';">Volver al inicio</button>
+    </div>
+</section>
+{% endblock contenido %}
