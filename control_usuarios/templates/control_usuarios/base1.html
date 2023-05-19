@@ -139,7 +139,29 @@
           <!-- botones de la derecha -->
           <div class="col-md-3 text-end">
             {% if user.is_authenticated %}
-            <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='{% url 'Salir' %}';">Logout</button>
+            <div class="dropdown">
+              <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div style="display: inline-flex;">
+                  <span>
+                    {% if user.first_name and user.last_name %}
+                    {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                    {{ user.username }}
+                    {% endif %}
+                  </span>
+                </div>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a class="dropdown-item" href="">Editar Perfil</a> {% comment %} agregar la url despues a href {% url 'editar_perfil' %} {% endcomment %}
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'Salir' %}"><strong>Logout</strong></a>
+                </li>
+              </ul>
+            </div>
+          </div>
             {% else %}
             <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='{% url 'Ingresar' %}';">Login</button>
             <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'Registrarse' %}';">Sign-up</button>
