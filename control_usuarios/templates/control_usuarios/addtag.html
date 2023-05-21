@@ -3,6 +3,13 @@
 {% block contenido %}
 <section>
     <div>
+        {% if messages %}
+        <ul class="messages" style="text-align:left">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <form action="{% url 'Agregar etiqueta' %}" method="post">
             {% csrf_token %}
             <div class="input-group mb-3">

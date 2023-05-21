@@ -1,10 +1,9 @@
 from django import forms
-from django.core.validators import validate_slug, MinLengthValidator
+from django.core.validators import validate_unicode_slug, MinLengthValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.forms.fields import EmailField
-from django.forms.forms import Form
+from control_usuarios.models import Etiqueta
 
 class Userform(UserCreationForm):
 
@@ -45,4 +44,11 @@ class Userform(UserCreationForm):
 
 class Tagform(forms.Form):
 
-    nombre = forms.CharField(max_length=10, validators=[MinLengthValidator(1)], required=True)
+    nombre = forms.CharField(max_length=10, validators=[MinLengthValidator(1), validate_unicode_slug], required=True)
+
+    def clean_nombre(self):  
+        nombre = self.cleaned_data['nombre'].lower()  
+        new = Etiqueta.objects.filter(nombre = nombre)  
+        if new.count():
+            raise ValidationError("La etiqueta ya existe")  
+        return nombre
