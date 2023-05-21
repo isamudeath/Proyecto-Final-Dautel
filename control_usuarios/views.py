@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from control_usuarios.models import Etiqueta
 from control_usuarios.forms import Userform, Tagform
 
+#--------- Signup, Login, Logout y Perfil
+
 def signup(request):
     if request.method == "POST":
         userform = Userform(request.POST)
@@ -37,6 +39,16 @@ def signup(request):
             context={'userform': userform}
         )
         return http_response
+
+
+def signsucc(request):
+    contexto = {}
+    http_response = render(
+        request=request,
+        template_name='control_usuarios/sign-succ.html',
+        context=contexto,
+    )
+    return http_response
 
 
 def login_view(request):
@@ -67,6 +79,19 @@ class CustomLogoutView(LogoutView):
    template_name = 'control_usuarios/logout.html'
 
 
+def profile(request):
+    contexto = {}
+    http_response = render(
+        request=request,
+        template_name='control_usuarios/profile.html',
+        context=contexto,
+    )
+    return http_response
+
+
+#--------- Etiquetas
+
+
 def tags(request):
     contexto = {
         "tags": Etiqueta.objects.all(),
@@ -77,6 +102,7 @@ def tags(request):
         context=contexto,
     )
     return http_response
+
 
 @login_required
 def add_tag(request):
@@ -137,14 +163,7 @@ def tagsucc(request):
     return http_response
 
 
-def profile(request):
-    contexto = {}
-    http_response = render(
-        request=request,
-        template_name='control_usuarios/profile.html',
-        context=contexto,
-    )
-    return http_response
+#--------- Users
 
 @login_required
 def users(request):
@@ -156,7 +175,7 @@ def users(request):
     )
     return http_response
 
-
+@login_required
 def users_search(request):
     if request.method == "POST":
         data = request.POST
@@ -171,13 +190,4 @@ def users_search(request):
         context=contexto,
         )
         return http_response
-
-
-def signsucc(request):
-    contexto = {}
-    http_response = render(
-        request=request,
-        template_name='control_usuarios/sign-succ.html',
-        context=contexto,
-    )
-    return http_response
+    
