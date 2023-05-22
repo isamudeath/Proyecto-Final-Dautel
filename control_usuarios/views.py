@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.urls import reverse, reverse_lazy
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView
 
 from control_usuarios.models import Etiqueta, Avatar
 from control_usuarios.forms import Userform, Tagform, UserUpdateForm, AvatarForm
@@ -128,7 +124,7 @@ def edit_avatar(request, id):
         if formulario.is_valid():
             avatar.avatar = formulario.cleaned_data['avatar']
             avatar.save()
-            url_exitosa = reverse_lazy('Perfil', args=[id])
+            url_exitosa = reverse('Perfil', args=[id])
             return redirect(url_exitosa)
 
     else:  # GET
@@ -137,7 +133,7 @@ def edit_avatar(request, id):
     return render(
         request=request,
         template_name="control_usuarios/edit-avatar.html",
-        context={'form': formulario},
+        context={'form': formulario, 'user': usuario},
     )
 
 
