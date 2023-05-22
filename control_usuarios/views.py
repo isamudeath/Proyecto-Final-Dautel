@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -8,9 +8,10 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
 
-from control_usuarios.models import Etiqueta
-from control_usuarios.forms import Userform, Tagform
+from control_usuarios.models import Etiqueta, Avatar
+from control_usuarios.forms import Userform, Tagform, UserUpdateForm, AvatarForm
 
 #--------- Signup, Login, Logout y Perfil
 
@@ -52,41 +53,93 @@ def signsucc(request):
 
 
 def login_view(request):
-    next_url = request.GET.get('next')
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            usuario = data.get('username')
-            password = data.get('password')
-            user = authenticate(username=usuario, password=password)
-            # user puede ser un usuario o None
-            if user:
-                login(request=request, user=user)
-                if next_url:
-                    return redirect(next_url)
-                url_success = reverse('Home')
-                return redirect(url_success)
-    else:  # GET
-        form = AuthenticationForm()
-    return render(
-            request=request,
-            template_name='control_usuarios/login.html',
-            context={'form': form},
-    )
+    if request.method == 'POST':
+
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            next_page = request.GET.get('next')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect('Home')
+    return render(request, 'control_usuarios/login.html')    # GET
     
 class CustomLogoutView(LogoutView):
    template_name = 'control_usuarios/logout.html'
 
 
-def profile(request):
-    contexto = {}
-    http_response = render(
-        request=request,
-        template_name='control_usuarios/profile.html',
-        context=contexto,
+@login_required
+def profile(request, id):
+    user = User.objects.get(id=id)
+    inicial = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'username': user.username,
+        'email': user.email,
+    }
+    formulario = Userform(initial=inicial, instance=user)
+    context = {
+        'formulario': formulario
+    }
+    return render(request, 'control_usuarios/profile.html', context)
+
+
+@login_required
+def edit_profile(request, id):
+   user = User.objects.get(id=id)
+   if request.method == "POST":
+       formulario = UserUpdateForm(request.POST)
+
+       if formulario.is_valid():
+           data = formulario.cleaned_data
+           user.first_name = data['first_name']
+           user.last_name = data['last_name']
+           user.save()
+           url_exitosa = reverse('Perfil', args=[id])
+           return redirect(url_exitosa)
+   else:  # GET
+       inicial = {
+           'first_name': user.first_name,
+           'last_name': user.last_name,
+       }
+       formulario = UserUpdateForm(initial=inicial)
+   return render(
+       request=request,
+       template_name='control_usuarios/edit-profile.html',
+       context={'formulario': formulario},
+   )
+    
+
+@login_required
+def edit_avatar(request, id):
+    usuario = get_object_or_404(User, id=id)
+    avatar, created = Avatar.objects.update_or_create(
+        user=usuario,
+        defaults={'avatar': request.FILES.get('avatar')}
     )
-    return http_response
+
+    if request.method == "POST":
+        formulario = AvatarForm(request.POST, request.FILES)
+
+        if formulario.is_valid():
+            avatar.avatar = formulario.cleaned_data['avatar']
+            avatar.save()
+            url_exitosa = reverse_lazy('Perfil', args=[id])
+            return redirect(url_exitosa)
+
+    else:  # GET
+        formulario = AvatarForm()
+
+    return render(
+        request=request,
+        template_name="control_usuarios/edit-avatar.html",
+        context={'form': formulario},
+    )
+
 
 
 #--------- Etiquetas

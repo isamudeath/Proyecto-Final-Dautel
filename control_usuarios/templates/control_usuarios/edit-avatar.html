@@ -1,0 +1,34 @@
+{% extends "control_usuarios/base1.html" %}
+{% load static %}
+{% block contenido %}
+<section style="text-align:center">
+    <span>
+        {% if user.first_name and user.last_name %}
+        <p>Avatar de: <b>{{ user.first_name }} {{ user.last_name }}</b></p>
+        {% else %}
+        <p>Avatar de: <b>{{ user.username }}</b></p>
+        {% endif %}
+    </span>
+
+    <h3 style="text-align:left">Subir imágen de perfil</h3>
+    {% if messages %}
+    <ul class="messages" style="text-align:left">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="{% url 'editar_avatar' user.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+            <input type="file" class="form-control" id="inputGroupFile01" name="avatar">
+        </div>
+        <br>
+        <button class="btn btn-primary rounded-pill px-3" type="submit" value="Guardar">Guardar</button>
+        <button type="button" class="btn btn-secondary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Perfil' user.id %}';">Cancelar</button>
+        <br>
+        {{formulario.errors}}
+    </form>    
+</section>
+{% endblock contenido %}

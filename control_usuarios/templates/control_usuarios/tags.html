@@ -3,13 +3,17 @@
 {% block contenido %}
 <section>
     <div>
-        <h1><p style="text-align:center">Etiquetas</p></h1>
+        <h1 style="text-align: center;">Etiquetas</h1>
         <br>
-        <div>
-            <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Agregar etiqueta' %}';">Crear etiqueta</button>
-            <form action="{% url 'Busqueda Etiqueta' %}" method="post" style="padding-right: 5% padding-top: 10%; text-align:right">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            {% if user.is_authenticated %}
+            <button type="button" class="btn btn-primary" style="padding: 10px;" onclick="window.location.href='{% url 'Agregar etiqueta' %}';">Crear etiqueta</button>
+            {% else %}
+            <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='{% url 'Agregar etiqueta' %}?next={{ request.path|urlencode }}';">Login para crear etiqueta</button>
+            {% endif %}
+            <form action="{% url 'Busqueda Etiqueta' %}" method="post" style="display: flex; align-items: center;">
                 {% csrf_token %}
-                <input type="text" name="busqueda" placeholder="Buscar etiqueta">
+                <input type="text" name="busqueda" placeholder="Buscar etiqueta" style="margin-right: 10px;">
                 <button class="btn btn-secondary" type="submit" value="Buscar">Buscar</button>
             </form>
         </div>

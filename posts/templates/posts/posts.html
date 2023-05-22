@@ -5,7 +5,11 @@
     <div>
         <h1><p style="text-align:center">Posts</p></h1>
         <br>
+        {% if user.is_authenticated %}
         <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}';">Crear Post</button>
+        {% else %}
+        <button type="button" class="btn btn-outline-primary me-2" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}?next={{ request.path|urlencode }}';">Login para crear un post</button>
+        {% endif %}
     </div>
 </section>
 {% endblock contenido %}

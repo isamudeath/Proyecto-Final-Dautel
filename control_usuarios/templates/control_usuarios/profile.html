@@ -3,7 +3,29 @@
 {% block contenido %}
 <section>
     <div>
-        <h1><p style="text-align:center">Perfil</p></h1>
+        <h2><p style="text-align:center">Perfil</p></h2>
+        <br>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="text-align:left">
+                {% if user.first_name and user.last_name %}
+                    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                    <br>
+                    <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                {% else %}
+                    <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                {% endif %}
+            </span>
+            {% if user.avatar and user.avatar.avatar %}
+                <img src="{{ user.avatar.avatar.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+            {% endif %}
+        </div>
+        <br>
+        <p style="text-align:left"><b>Mail: </b>{{ user.email }}</p>
+        <br>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_perfil' user.id %}';">Editar Perfil</button>
+            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Editar Avatar</button>
+        </div>
     </div>
 </section>
 {% endblock contenido %}

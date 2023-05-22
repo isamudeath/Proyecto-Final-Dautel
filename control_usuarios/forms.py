@@ -3,7 +3,7 @@ from django.core.validators import validate_unicode_slug, MinLengthValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from control_usuarios.models import Etiqueta
+from control_usuarios.models import Etiqueta, Avatar
 
 class Userform(UserCreationForm):
 
@@ -41,6 +41,24 @@ class Userform(UserCreationForm):
             password=self.cleaned_data['password1']  
         ) 
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+   
+    first_name = forms.CharField(max_length=150, validators=[MinLengthValidator(1)], required=True)
+    last_name = forms.CharField(max_length=150, validators=[MinLengthValidator(1)], required=True)
+
+    class Meta:
+        model = User
+        fields = ['last_name', 'first_name']
+
+
+class AvatarForm(forms.ModelForm):
+
+   class Meta:
+       model = Avatar
+       fields = ['avatar']
+
 
 class Tagform(forms.Form):
 

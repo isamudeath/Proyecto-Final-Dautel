@@ -28,6 +28,4 @@ urlpatterns = [
     path('control_usuarios/', include('control_usuarios.urls')),
     path('acerca-de/', about, name="Acerca de"),
     path('posts/', include('posts.urls')),
-]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
