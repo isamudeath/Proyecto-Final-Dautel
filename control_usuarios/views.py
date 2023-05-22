@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 from control_usuarios.models import Etiqueta, Avatar
 from control_usuarios.forms import Userform, Tagform, UserUpdateForm, AvatarForm
@@ -130,6 +131,16 @@ def edit_avatar(request, id):
     )
 
 
+@login_required
+def delete_avatar(request, id):
+    usuario = get_object_or_404(User, id=id)
+    avatar = Avatar.objects.get(user=usuario)
+    if request.method == "POST":
+       avatar.delete()
+       url_exitosa = reverse('Perfil', args=[id])
+       return redirect(url_exitosa)
+    else:
+        return HttpResponse("No se puede eliminar el avatar.")
 
 #--------- Etiquetas
 

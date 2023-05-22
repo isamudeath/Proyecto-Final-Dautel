@@ -16,4 +16,5 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name="Salir"),
     path('edit-profile/<int:id>/', views.edit_profile, name="editar_perfil"),
     path('edit-avatar/<int:id>/', views.edit_avatar, name="editar_avatar"),
+    path('delete-avatar/<int:id>/', views.delete_avatar, name="borrar_avatar"),
 ]

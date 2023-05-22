@@ -24,7 +24,15 @@
         <br>
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_perfil' user.id %}';">Editar Perfil</button>
+            {% if user.avatar and user.avatar.avatar %}
             <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Editar imagen de Perfil</button>
+            <form action="{% url 'borrar_avatar' user.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger px-3" style="padding-left: 5% padding-top: 10%; text-align:left" value="Eliminar">Eliminar imagen de Perfil</button>
+            </form>
+            {% else %}
+            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Subir imagen de Perfil</button>
+            {% endif %}
         </div>
     </div>
 </section>
