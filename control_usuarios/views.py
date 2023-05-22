@@ -113,22 +113,15 @@ def edit_profile(request, id):
 @login_required
 def edit_avatar(request, id):
     usuario = get_object_or_404(User, id=id)
-    avatar, created = Avatar.objects.update_or_create(
-        user=usuario,
-        defaults={'avatar': request.FILES.get('avatar')}
-    )
-
+    avatar, created = Avatar.objects.get_or_create(user=usuario)
     if request.method == "POST":
-        formulario = AvatarForm(request.POST, request.FILES)
-
+        formulario = AvatarForm(request.POST, request.FILES, instance=avatar)
         if formulario.is_valid():
-            avatar.avatar = formulario.cleaned_data['avatar']
-            avatar.save()
+            formulario.save()
             url_exitosa = reverse('Perfil', args=[id])
             return redirect(url_exitosa)
-
     else:  # GET
-        formulario = AvatarForm()
+        formulario = AvatarForm(instance=avatar)
 
     return render(
         request=request,

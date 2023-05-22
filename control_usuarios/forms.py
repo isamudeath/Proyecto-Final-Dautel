@@ -57,7 +57,7 @@ class AvatarForm(forms.ModelForm):
 
    class Meta:
        model = Avatar
-       fields = ['avatar']
+       exclude = ['user']
 
 
 class Tagform(forms.Form):
