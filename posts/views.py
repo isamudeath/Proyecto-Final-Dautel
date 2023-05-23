@@ -8,13 +8,14 @@ from posts.models import Post
 from posts.forms import Postform
 
 def posts(request):
-    contexto = {}
-    http_response = render(
-        request=request,
-        template_name='posts/posts.html',
-        context=contexto,
-    )
-    return http_response
+    num_posts = 4  # Número de últimos objetos a mostrar
+    posts = Post.objects.order_by('-fecha')[:num_posts]
+    contexto = {'posts': posts}
+    return render(
+        request, 
+        'posts/posts.html', 
+        contexto
+        )
 
 
 @login_required
