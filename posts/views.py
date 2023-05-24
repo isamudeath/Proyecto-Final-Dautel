@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
 
 from posts.models import Post
 from posts.forms import Postform
@@ -35,9 +36,9 @@ def create_post(request):
             titulo = data["titulo"]
             contenido = data["contenido"]
             autor = request.user
-            post = Post(titulo=titulo, contenido=contenido,  autor=autor)
+            post = Post(titulo=titulo, contenido=contenido, autor=autor)
             post.save()
-            url_success = reverse('Post creado')
+            url_success = reverse('detalle', args=[post.id])
             return redirect(url_success)
         else:
             for field, errors in postform.errors.items():
@@ -57,13 +58,51 @@ def create_post(request):
             context={'postform': postform}
         )
         return http_response
+    
+
+@login_required
+def edit_post(request, id):
+    post = Post.objects.get(id=id)
+    detalle_url = post.get_absolute_url()
+    if request.method == "POST":
+        postform = Postform(request.POST, initial={'titulo': post.titulo, 'contenido': post.contenido})
+
+        if postform.is_valid():
+            data = postform.cleaned_data
+            post.titulo = data["titulo"]
+            post.contenido = data["contenido"]
+            post.fecha_mod = timezone.now()
+            post.save()
+            url_exitosa = reverse('detalle', args=[post.id])
+            return redirect(url_exitosa)
+    else:  # GET
+        inicial = {
+            'titulo': post.titulo,
+            'contenido': post.contenido,
+        }
+        postform = Postform(initial=inicial)
+    return render(
+        request=request,
+        template_name='posts/edit-post.html',
+        context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
+    )
 
 
-def post_succ(request):
+@login_required
+def delete_post(request, id):
+    post = Post.objects.get(id=id)
+    if request.method == "POST":
+        post.delete()
+        return redirect('post_borrado')
+    else:
+        return render(request, 'posts/delete-post.html', {'post': post})
+    
+
+def post_deleted(request):
     contexto = {}
     http_response = render(
         request=request,
-        template_name='posts/post-succ.html',
+        template_name='posts/post-deleted.html',
         context=contexto,
     )
     return http_response

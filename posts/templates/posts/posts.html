@@ -14,17 +14,17 @@
     <br>
     <div class="row mb-2">
         {% for post in posts %}
-        <div class="col-md-6">
+        <div class="col-md-6" title="{{ post.titulo }}">
           <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
               <strong class="d-inline-block mb-2 text-primary">{{ post.etiqueta }}</strong>
-              <h3 class="mb-0">{{ post.titulo }}</h3>
+              <h3 class="mb-0">{{ post.titulo|truncatechars:30 }}</h3>
               {% if user.is_authenticated %}
                 <div class="mb-1 text-body-secondary">{{ post.fecha }} por {{ post.autor }}</div>
               {% else %}
                 <div class="mb-1 text-body-secondary">{{ post.fecha }}</div>
               {% endif %}
-              <p class="card-text mb-auto">{{ post.contenido }}</p>
+              <p class="card-text mb-auto">{{ post.contenido|truncatechars:75 }}</p>
               <a href="{% url 'detalle' post.id %}" class="stretched-link">Seguir leyendo</a>
             </div>
             <div class="col-auto d-none d-lg-block">

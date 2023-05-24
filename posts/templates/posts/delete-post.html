@@ -1,0 +1,17 @@
+{% extends "control_usuarios/base1.html" %}
+
+{% block contenido %}
+<section>
+    <div>
+        <h1>Confirmar eliminación del post</h1>
+        <p>¿Estás seguro de que quieres eliminar el siguiente post?</p>
+        <h2>{{ post.titulo }}</h2>
+        <p>{{ post.fecha }}</p>
+        <form action="{% url 'borrar_post' post.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a href="{% url 'detalle' post.id %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</section>
+{% endblock contenido %}
