@@ -1,0 +1,31 @@
+{% extends "control_usuarios/base1.html" %}
+
+{% block contenido %}
+<section>
+    <div>
+        <article class="blog-post">
+            <h2 class="blog-post-title mb-1">{{ post.titulo }}</h2>
+            <div>
+                {% if user.is_authenticated %}
+                    <p class="blog-post-meta">{{ post.fecha }} por <a href="#">{{ post.autor }}</a><br><a href="#">{{ post.etiqueta }}</a></p>
+                {% else %}
+                    <p class="blog-post-meta">{{ post.fecha }}</p>
+                {% endif %}
+            </div>
+            <hr>
+            <div>
+                <p class="lead"><em>{{ post.contenido }}</em></p>
+            </div>
+            <div>
+            {% if post.imagenes %}
+                <img src="{{ post.imagenes.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+            {% endif %}
+            </div>
+            <hr>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Posts'%}';">Volver a Posts</button>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock contenido %}

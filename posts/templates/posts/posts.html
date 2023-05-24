@@ -19,9 +19,13 @@
             <div class="col p-4 d-flex flex-column position-static">
               <strong class="d-inline-block mb-2 text-primary">{{ post.etiqueta }}</strong>
               <h3 class="mb-0">{{ post.titulo }}</h3>
-              <div class="mb-1 text-body-secondary">{{ post.fecha }}</div>
+              {% if user.is_authenticated %}
+                <div class="mb-1 text-body-secondary">{{ post.fecha }} por {{ post.autor }}</div>
+              {% else %}
+                <div class="mb-1 text-body-secondary">{{ post.fecha }}</div>
+              {% endif %}
               <p class="card-text mb-auto">{{ post.contenido }}</p>
-              <a href="#" class="stretched-link">Continue reading</a>
+              <a href="{% url 'detalle' post.id %}" class="stretched-link">Seguir leyendo</a>
             </div>
             <div class="col-auto d-none d-lg-block">
               {% if post.imagenes %}
