@@ -34,8 +34,8 @@ pip install -r requirements.txt
 *Las tabs Perfil, Acerca de y el botón Login no están implementados aún y contienen solo un placeholder*
 
 # Superusuario de pruebas
-username:adminfinal
-contraseña:pass40440
+username: adminfinal
+contraseña: pass40440
 
 # Usuarios normales
 username: v2user
