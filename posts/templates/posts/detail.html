@@ -7,7 +7,7 @@
             <h2 class="blog-post-title mb-1">{{ post.titulo }}</h2>
             <div>
                 {% if user.is_authenticated %}
-                    <p class="blog-post-meta">{{ post.fecha }} por <a href="#">{{ post.autor }}</a><br><a href="#">{{ post.etiqueta }}</a></p>
+                    <p class="blog-post-meta">{{ post.fecha }} por <a href="{% url 'Perfil' post.autor_id %}">{{ post.autor }}</a><br><a href="#">{{ post.etiqueta }}</a></p>
                 {% else %}
                     <p class="blog-post-meta">{{ post.fecha }}</p>
                 {% endif %}

@@ -3,16 +3,24 @@
 {% block contenido %}
 <section class="container" style="max-width: 90%;">
     <div>
-        <h1><p style="text-align:center">Últimos Posts</p></h1>
-        <br>
+      <h1><p style="text-align:center">Últimos Posts</p></h1>
+      <br>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
         {% if user.is_authenticated %}
-        <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}';">Crear Post</button>
+          <button type="button" class="btn btn-primary" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}';">Crear Post</button>
         {% else %}
-        <button type="button" class="btn btn-outline-primary me-2" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}?next={{ request.path|urlencode }}';">Login para crear un post</button>
+          <button type="button" class="btn btn-outline-primary me-2" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Crear Post' %}?next={{ request.path|urlencode }}';">Login para crear un post</button>
         {% endif %}
+        <form action="{% url 'Busqueda Post' %}" method="post" style="display: flex; align-items: center;">
+            {% csrf_token %}
+            <input type="text" name="busqueda" placeholder="Buscar por título" style="margin-right: 10px;">
+            <button class="btn btn-secondary" type="submit" value="Buscar">Buscar</button>
+        </form>
+      </div>
     </div>
     <br>
     <div class="row mb-2">
+      {% if posts %}
         {% for post in posts %}
         <div class="col-md-6" title="{{ post.titulo }}">
           <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -37,7 +45,9 @@
           </div>
         </div>
         {% endfor %}
-        
+      {% else %}
+        <p style="text-align: center;"><i>No se encontraron resultados.</i></p>
+      {% endif %}
       </div>
 </section>
 {% endblock contenido %}

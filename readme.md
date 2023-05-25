@@ -32,3 +32,11 @@ pip install -r requirements.txt
 + El botón Sign-up nos llevara al formulario de registro, todos los campos son obligatorios
 ---
 *Las tabs Perfil, Acerca de y el botón Login no están implementados aún y contienen solo un placeholder*
+
+# Superusuario de pruebas
+username:adminfinal
+contraseña:pass40440
+
+# Usuarios normales
+username: v2user
+contraseña: Super!123

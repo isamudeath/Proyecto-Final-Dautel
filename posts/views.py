@@ -58,7 +58,7 @@ def create_post(request):
             context={'postform': postform}
         )
         return http_response
-    
+ 
 
 @login_required
 def edit_post(request, id):
@@ -96,7 +96,7 @@ def delete_post(request, id):
         return redirect('post_borrado')
     else:
         return render(request, 'posts/delete-post.html', {'post': post})
-    
+
 
 def post_deleted(request):
     contexto = {}
@@ -106,3 +106,18 @@ def post_deleted(request):
         context=contexto,
     )
     return http_response
+
+
+def post_search(request):
+    if request.method == "POST":
+        data = request.POST
+        busqueda = data["busqueda"]
+        posts = Post.objects.filter(titulo__contains=busqueda)
+        contexto = {
+            'posts': posts
+        }
+    return render(
+        request, 
+        'posts/posts.html', 
+        contexto
+        )

@@ -18,11 +18,22 @@
             </form>
         </div>
         <br><br>
-        <ul>
-            {% for tags in nombre %}
-            <li><b>{{ tags.nombre }} </b><i>- Creada por: {{ tags.autor }}</i></li>
-            {% endfor %}
-        </ul>
+        {% if nombre %}
+            <ul>
+                {% for tags in nombre %}
+                <li>
+                    <b>{{ tags.nombre }}</b>
+                    {% if tags.autor.first_name and tags.autor.last_name %}
+                        <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor.first_name }} {{ tags.autor.last_name }}</a></i>
+                    {% else %}
+                        <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor }}</a></i>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="text-align: center;"><i>No se encontraron resultados.</i></p>
+        {% endif %}
     </div>
 </section>
 {% endblock contenido %}
