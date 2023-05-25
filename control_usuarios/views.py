@@ -70,8 +70,13 @@ class CustomLogoutView(LogoutView):
 
 
 @login_required
-def profile(request, id):
-    user = User.objects.get(id=id)
+def profile(request, id=None):
+    if id is None:
+        user = request.user  # Obtener el usuario autenticado
+        is_current_user = True
+    else:
+        user = User.objects.get(id=id)
+        is_current_user = (user == request.user)
     inicial = {
         'first_name': user.first_name,
         'last_name': user.last_name,
@@ -80,7 +85,8 @@ def profile(request, id):
     }
     formulario = Userform(initial=inicial, instance=user)
     context = {
-        'formulario': formulario
+        'formulario': formulario,
+        'is_current_user': is_current_user,
     }
     return render(request, 'control_usuarios/profile.html', context)
 

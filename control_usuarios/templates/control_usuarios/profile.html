@@ -12,37 +12,55 @@
 {% block contenido %}
 <section class="container" style="max-width: 90%;">
     <div>
-        <h2><p style="text-align:center">Perfil</p></h2>
-        <br>
         <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="text-align:left">
-                {% if user.first_name and user.last_name %}
-                    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            {% if is_current_user %}    
+                <span style="text-align:left">
+                    <h2>Tu perfil</h2>
                     <br>
-                    <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                    {% if user.first_name and user.last_name %}
+                        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                        <br>
+                        <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                    {% else %}
+                        <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                    {% endif %}
+                </span>
+                {% if user.avatar and user.avatar.avatar %}
+                    <img src="{{ user.avatar.avatar.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+                {% endif %}
+            </div>
+            <br>
+            <p style="text-align:left"><b>Mail: </b>{{ user.email }}</p>
+            <br>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_perfil' user.id %}';">Editar Perfil</button>
+                {% if user.avatar and user.avatar.avatar %}
+                <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Editar imagen de Perfil</button>
+                <form action="{% url 'borrar_avatar' user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger px-3" style="padding-left: 5% padding-top: 10%; text-align:left" value="Eliminar">Eliminar imagen de Perfil</button>
+                </form>
                 {% else %}
-                    <p style="text-align:left"><b>User: </b>{{ user.username }}</p>
+                <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Subir imagen de Perfil</button>
+                {% endif %}
+            {% else %}
+            <span style="text-align:left">
+                <h2>Perfil de <i>{{ formulario.instance.username }}</i></h2>
+                <br>
+                {% if formulario.instance.first_name and formulario.instance.last_name %}
+                    <h1>{{ formulario.instance.first_name }} {{ formulario.instance.last_name }}</h1>
+                    <br>
                 {% endif %}
             </span>
-            {% if user.avatar and user.avatar.avatar %}
-                <img src="{{ user.avatar.avatar.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+            {% if formulario.instance.avatar and formulario.instance.avatar.avatar %}
+                <img src="{{ formulario.instance.avatar.avatar.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
             {% endif %}
-        </div>
-        <br>
-        <p style="text-align:left"><b>Mail: </b>{{ user.email }}</p>
-        <br>
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_perfil' user.id %}';">Editar Perfil</button>
-            {% if user.avatar and user.avatar.avatar %}
-            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Editar imagen de Perfil</button>
-            <form action="{% url 'borrar_avatar' user.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger px-3" style="padding-left: 5% padding-top: 10%; text-align:left" value="Eliminar">Eliminar imagen de Perfil</button>
-            </form>
-            {% else %}
-            <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_avatar' user.id %}';">Subir imagen de Perfil</button>
+            </div>
+            <br>
+            <p style="text-align:left"><b>Mail: </b>{{ formulario.instance.email }}</p>
+            <br>
+            </div>
             {% endif %}
-        </div>
     </div>
 </section>
 {% endblock contenido %}
