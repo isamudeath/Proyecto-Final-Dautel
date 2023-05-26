@@ -36,8 +36,8 @@
               <a href="{% url 'detalle' post.id %}" class="stretched-link">Seguir leyendo</a>
             </div>
             <div class="col-auto d-none d-lg-block">
-              {% if post.imagenes %}
-                <img src="{{ post.imagenes.url }}" alt="Thumbnail" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+              {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" alt="Thumbnail" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice" alt="Imagen del post">
               {% else %}
                 <img src="{% static 'assets/img/default-thumbnail.png' %}" alt="Thumbnail" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
               {% endif %}

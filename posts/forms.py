@@ -1,8 +1,7 @@
 from django import forms
-from django.core.validators import validate_slug, MinLengthValidator
+from .models import Post
 
-class Postform(forms.Form):
-
-    titulo = forms.CharField(max_length=256, validators=[MinLengthValidator(1)], required=True)
-    contenido = forms.CharField(widget=forms.Textarea())
-    #imagenes = forms.ImageField()
+class Postform(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['titulo', 'contenido', 'imagen']

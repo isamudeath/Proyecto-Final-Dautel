@@ -3,12 +3,24 @@
 {% block contenido %}
 <section>
     <div>
+        {% if messages %}
+        <ul class="messages" style="text-align:left">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
         <h1 style="text-align:center">
-            <form action="{% url 'editar_post' post.id %}" method="post">
+            {% endif %}
+            <form action="{% url 'editar_post' post.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input class="form-control" type="text" placeholder="Titulo del Post" name="titulo" minlength="1" maxlength="256" value="{{ postform.initial.titulo }}">
                 <br>
                 <textarea class="form-control" id="contenido" placeholder="Cuentanos sobre tu post..." name="contenido" minlength="1" maxlength="4000" rows="4" cols="50">{{ postform.initial.contenido }}</textarea>
+                <br>
+                <div class="input-group mb-3">
+                    <label for="formFile" class="form-label"></label>
+                    <input type="file" class="form-control" id="formFile" name="imagen">
+                </div>
                 <br>
                 <button class="btn btn-primary rounded-pill px-3" type="submit" value="Crear">Guardar</button>
                 <button type="button" class="btn btn-secondary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{{ detalle_url }}';">Cancelar</button>

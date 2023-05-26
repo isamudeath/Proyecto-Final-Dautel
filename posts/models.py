@@ -7,7 +7,7 @@ class Post(models.Model):
 
     titulo = models.CharField(max_length=256, validators=[MinLengthValidator(1)],)
     contenido = models.TextField(max_length=4000)
-    imagenes = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
+    imagen = models.ImageField(upload_to='post_images', null=True, blank=True, height_field=None, width_field=None, max_length=None)
     etiqueta = models.CharField(max_length=10, validators=[validate_slug])
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     fecha = models.DateTimeField(auto_now_add=True)

@@ -30,13 +30,14 @@ def post_detail(request, id):
 @login_required
 def create_post(request):
     if request.method == "POST":
-        postform = Postform(request.POST)
+        postform = Postform(request.POST, request.FILES)
         if postform.is_valid():
             data = postform.cleaned_data
             titulo = data["titulo"]
             contenido = data["contenido"]
+            imagen = data["imagen"]
             autor = request.user
-            post = Post(titulo=titulo, contenido=contenido, autor=autor)
+            post = Post(titulo=titulo, contenido=contenido, autor=autor, imagen=imagen)
             post.save()
             url_success = reverse('detalle', args=[post.id])
             return redirect(url_success)
@@ -64,28 +65,54 @@ def create_post(request):
 def edit_post(request, id):
     post = Post.objects.get(id=id)
     detalle_url = post.get_absolute_url()
+
     if request.method == "POST":
-        postform = Postform(request.POST, initial={'titulo': post.titulo, 'contenido': post.contenido})
+        postform = Postform(request.POST, request.FILES, instance=post)
 
         if postform.is_valid():
-            data = postform.cleaned_data
-            post.titulo = data["titulo"]
-            post.contenido = data["contenido"]
+            post = postform.save(commit=False)
             post.fecha_mod = timezone.now()
             post.save()
             url_exitosa = reverse('detalle', args=[post.id])
             return redirect(url_exitosa)
     else:  # GET
-        inicial = {
-            'titulo': post.titulo,
-            'contenido': post.contenido,
-        }
-        postform = Postform(initial=inicial)
+        postform = Postform(instance=post)
+
     return render(
         request=request,
         template_name='posts/edit-post.html',
         context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
     )
+# @login_required
+# def edit_post(request, id):
+#     post = Post.objects.get(id=id)
+#     detalle_url = post.get_absolute_url()
+#     if request.method == "POST":
+#         postform = Postform(request.POST, request.FILES, initial={'titulo': post.titulo, 'contenido': post.contenido, 'imagen': post.imagen})
+
+#         if postform.is_valid():
+#             data = postform.cleaned_data
+#             post.titulo = data["titulo"]
+#             post.contenido = data["contenido"]
+#             post.imagen = data["imagen"]
+#             post.fecha_mod = timezone.now()
+#             post.save()
+#             url_exitosa = reverse('detalle', args=[post.id])
+#             return redirect(url_exitosa)
+#     else:  # GET
+#         for field, errors in postform.errors.items():
+#             messages.error(request, f"{', '.join(errors)}")
+#         inicial = {
+#             'titulo': post.titulo,
+#             'contenido': post.contenido,
+#             'imagen': post.imagen
+#         }
+#         postform = Postform(initial=inicial)
+#     return render(
+#         request=request,
+#         template_name='posts/edit-post.html',
+#         context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
+#     )
 
 
 @login_required

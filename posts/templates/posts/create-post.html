@@ -3,12 +3,24 @@
 {% block contenido %}
 <section>
     <div>
+        {% if messages %}
+        <ul class="messages" style="text-align:left">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <h1 style="text-align:center">
-            <form action="{% url 'Crear Post' %}" method="post">
+            <form action="{% url 'Crear Post' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input class="form-control" type="text" placeholder="Titulo del Post" name="titulo" minlength="1" maxlength="256">
                 <br>
                 <textarea class="form-control" id="contenido" placeholder="Cuentanos sobre tu post..." name="contenido" minlength="1" maxlength="4000" rows="4" cols="50"></textarea>
+                <br>
+                <div class="input-group mb-3">
+                    <label for="formFile" class="form-label"></label>
+                    <input type="file" class="form-control" id="formFile" name="imagen">
+                </div>
                 <br>
                 <button class="btn btn-primary rounded-pill px-3" type="submit" value="Crear">Crear</button>
                 {{ userform.errors }}

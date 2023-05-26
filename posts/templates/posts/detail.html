@@ -13,14 +13,13 @@
                 {% endif %}
             </div>
             <hr>
-            <div>
+            <div style="display: flex; align-items: top; justify-content: space-between;">
                 <p class="lead"><em>{{ post.contenido }}</em></p>
             </div>
-            <div>
-            {% if post.imagenes %}
-                <img src="{{ post.imagenes.url }}" class="rounded float-end" width="200" height="200" preserveAspectRatio="xMidYMid slice">
+            <br>
+            {% if post.imagen %}
+                <img src="{{ post.imagen.url }}" class="card-img-bottom" preserveAspectRatio="xMidYMid slice" alt="Imagen del post">
             {% endif %}
-            </div>
             <br>
             <div>
                 {% if post.fecha_mod %}
