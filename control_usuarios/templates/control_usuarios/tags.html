@@ -23,10 +23,12 @@
                 {% for tags in nombre %}
                 <li>
                     <b>{{ tags.nombre }}</b>
-                    {% if tags.autor.first_name and tags.autor.last_name %}
-                        <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor.first_name }} {{ tags.autor.last_name }}</a></i>
-                    {% else %}
-                        <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor }}</a></i>
+                    {% if user.is_authenticated %}
+                        {% if tags.autor.first_name and tags.autor.last_name %}
+                            <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor.first_name }} {{ tags.autor.last_name }}</a></i>
+                        {% else %}
+                            <i>- Creada por: <a href="{% url 'Perfil' tags.autor.id %}">{{ tags.autor }}</a></i>
+                        {% endif %}
                     {% endif %}
                 </li>
                 {% endfor %}

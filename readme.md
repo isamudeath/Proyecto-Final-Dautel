@@ -40,3 +40,6 @@ contraseña: pass40440
 # Usuarios normales
 username: v2user
 contraseña: Super!123
+
+username: user3
+contraseña: tercero3
