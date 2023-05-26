@@ -1,6 +1,11 @@
 {% extends "control_usuarios/base1.html" %}
 {% load static %}
 {% block contenido %}
+<style>
+    .hidden {
+      display: none;
+    }
+</style>
 <section>
     <div>
         {% if messages %}
@@ -17,10 +22,24 @@
                 <br>
                 <textarea class="form-control" id="contenido" placeholder="Cuentanos sobre tu post..." name="contenido" minlength="1" maxlength="4000" rows="4" cols="50">{{ postform.initial.contenido }}</textarea>
                 <br>
-                <div class="input-group mb-3">
-                    <label for="formFile" class="form-label"></label>
-                    <input type="file" class="form-control" id="formFile" name="imagen">
-                </div>
+                {% if post.imagen %}
+                    <div class="mb-3">
+                    <img src="{{ post.imagen.url }}" alt="Imagen del post" class="img-thumbnail {% if eliminar_imagen_input_value %}hidden{% endif %}">
+                    <div>
+                        <button type="button" class="btn btn-secondary {% if eliminar_imagen_input_value %}hidden{% endif %}" id="editar-imagen-btn">Editar imagen</button>
+                        <button type="button" class="btn btn-outline-danger" id="eliminar-imagen-btn" data-bs-toggle="button">Eliminar imagen</button>
+                    </div>
+                    </div>
+                    <div class="input-group mb-3 {% if eliminar_imagen_input_value %}hidden{% endif %}" id="editar-imagen-div" style="display: none;">
+                    <input type="file" name="imagen" accept="image/*" class="form-control">
+                    </div>
+                    <input type="hidden" name="eliminar_imagen" id="eliminar-imagen-input" value="0">
+                {% else %}
+                    <div class="input-group mb-3" id="agregar-imagen-div" style="display: flex; align-items: top; justify-content: space-between;">
+                    <input type="file" name="imagen" accept="image/*" class="form-control">
+                    </div>
+                    <br>
+                {% endif %}
                 <br>
                 <button class="btn btn-primary rounded-pill px-3" type="submit" value="Crear">Guardar</button>
                 <button type="button" class="btn btn-secondary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{{ detalle_url }}';">Cancelar</button>
@@ -29,4 +48,46 @@
         </h1>
     </div>
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const editarImagenBtn = document.getElementById("editar-imagen-btn");
+      const eliminarImagenBtn = document.getElementById("eliminar-imagen-btn");
+      const editarImagenDiv = document.getElementById("editar-imagen-div");
+      const eliminarImagenInput = document.getElementById("eliminar-imagen-input");
+      const agregarImagenBtn = document.getElementById("agregar-imagen-btn");
+      const agregarImagenDiv = document.getElementById("agregar-imagen-div");
+      const imagenPost = document.querySelector(".img-thumbnail");
+      const inputImagen = document.querySelector("input[name='imagen']");
+
+      editarImagenBtn.addEventListener("click", function() {
+        editarImagenDiv.style.display = "flex";
+        agregarImagenDiv.style.display = "none";
+        imagenPost.classList.add("hidden");
+        inputImagen.removeAttribute("disabled");
+      });
+
+      eliminarImagenBtn.addEventListener("click", function() {
+        if (eliminarImagenInput.value === "0") {
+          eliminarImagenInput.value = "1";
+          imagenPost.classList.add("hidden");
+          editarImagenDiv.classList.add("hidden");
+          inputImagen.setAttribute("disabled", "disabled");
+        } else {
+          eliminarImagenInput.value = "0";
+          imagenPost.classList.remove("hidden");
+          editarImagenDiv.classList.remove("hidden");
+          inputImagen.removeAttribute("disabled");
+        }
+        // Opcional: Mostrar un mensaje de confirmación antes de eliminar la imagen
+      });
+
+      agregarImagenBtn.addEventListener("click", function() {
+        agregarImagenDiv.style.display = "flex";
+        editarImagenDiv.style.display = "none";
+        imagenPost.classList.remove("hidden");
+        editarImagenDiv.classList.remove("hidden");
+        inputImagen.removeAttribute("disabled");
+      });
+    });
+</script>
 {% endblock contenido %}

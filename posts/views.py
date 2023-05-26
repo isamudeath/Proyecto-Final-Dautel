@@ -71,6 +71,13 @@ def edit_post(request, id):
 
         if postform.is_valid():
             post = postform.save(commit=False)
+
+            eliminar_imagen = request.POST.get("eliminar_imagen", "0")
+            if eliminar_imagen == "1":
+                # Eliminar la imagen del post
+                post.imagen.delete()
+                post.imagen = None
+
             post.fecha_mod = timezone.now()
             post.save()
             url_exitosa = reverse('detalle', args=[post.id])
@@ -83,6 +90,7 @@ def edit_post(request, id):
         template_name='posts/edit-post.html',
         context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
     )
+
 # @login_required
 # def edit_post(request, id):
 #     post = Post.objects.get(id=id)
