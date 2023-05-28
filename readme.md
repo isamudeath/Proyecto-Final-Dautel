@@ -77,6 +77,9 @@ Los usuarios admin logueados pueden realizar las siguientes accciones:
 ### Logout
 + Permite cerrar sesión
 
+## Video Demostración
+https://youtu.be/WdPl6ze16cs
+
 # Superusuario de pruebas
 username: adminfinal
 contraseña: pass40440
