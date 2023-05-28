@@ -18,8 +18,8 @@ pip install -r requirements.txt
 + Esta tab es el Home de la página
 
 ### Tab "Posts"
-+ En esta sección podemos crear Posts, por el momento solo se puede ingresar texto
-+ En el futuro se mostraras también los últimos N Posts creados
++ En esta sección podemos ver y crear Posts, estos pueden contener texto e imagenes
++ Se muestran también los últimos 4 Posts creados y se puede reazlizar una busqueda por título de post
 
 ### Tab "Usuarios"
 + Aquí podremos efectuar una búsqueda de usuarios en la DB por nombre de usuario
@@ -28,10 +28,17 @@ pip install -r requirements.txt
 + En esta tab podemos iniciar el proceso de creado de una etiqueta o buscar una etiqueta en la DB
 + Haciendo click en "Crear" nos redireccionará al formulario de creación
 
-### Sign-up
+### Sign-up / Login
 + El botón Sign-up nos llevara al formulario de registro, todos los campos son obligatorios
----
-*Las tabs Perfil, Acerca de y el botón Login no están implementados aún y contienen solo un placeholder*
++ El botón Login nos llevara a la página de inicio de sesión
++ Una vez que el usuario ha iniciado sesión correctamente estos botones son reemplazados por un botón dropdown con las opciones "Perfil" y "Logout"
+
+### Perfil
++ Aqui podemos visualizar la información del usuario
++ Si el perfil es el del usuario autenticado, el usuario podrá editar sus datos y avatar
+
+### Logout
++ Permite cerrar sesión
 
 # Superusuario de pruebas
 username: adminfinal

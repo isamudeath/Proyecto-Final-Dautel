@@ -13,7 +13,7 @@
         <br>
         <ul>
             {% for users in username %}
-            <li>{{ users.username }}</li>
+                <li><a href="{% url 'Perfil' users.id %}">{{ users.username }}</a>{% if users.first_name and users.last_name %} - {{ users.first_name }} {{ users.last_name }}{% endif %}</li>
             {% endfor %}
         </ul>
     </div>

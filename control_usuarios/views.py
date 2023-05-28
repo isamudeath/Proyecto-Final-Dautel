@@ -6,6 +6,7 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.db.models import Q
 
 from control_usuarios.models import Etiqueta, Avatar
 from control_usuarios.forms import Userform, Tagform, UserUpdateForm, AvatarForm
@@ -239,14 +240,18 @@ def users_search(request):
     if request.method == "POST":
         data = request.POST
         busqueda = data["busqueda"]
-        users = User.objects.filter(username__contains=busqueda)
+        users = User.objects.filter(
+            Q(username__contains=busqueda) |
+            Q(first_name__contains=busqueda) |
+            Q(last_name__contains=busqueda)
+        )
         contexto = {
             "username": users,
         }
         http_response = render(
-        request=request,
-        template_name='control_usuarios/users.html',
-        context=contexto,
+            request=request,
+            template_name='control_usuarios/users.html',
+            context=contexto,
         )
         return http_response
-    
+

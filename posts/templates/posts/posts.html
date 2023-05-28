@@ -33,7 +33,7 @@
                 <div class="mb-1 text-body-secondary">{{ post.fecha }}</div>
               {% endif %}
               <p class="card-text mb-auto">{{ post.contenido|truncatechars:75 }}</p>
-              <a href="{% url 'detalle' post.id %}" class="stretched-link">Seguir leyendo</a>
+              <a href="{% url 'detalle' post.id %}">Seguir leyendo</a>
             </div>
             <div class="col-auto d-none d-lg-block">
               {% if post.imagen %}
@@ -46,7 +46,11 @@
         </div>
         {% endfor %}
       {% else %}
-        <p style="text-align: center;"><i>No se encontraron resultados.</i></p>
+        {% if request.method == "POST" %}
+          <p style="text-align: center;"><i>No se encontraron resultados.</i></p>
+        {% else %}
+          <p style="text-align: center;"><i>No hay entradas aún.</i></p>
+        {% endif %}
       {% endif %}
       </div>
 </section>

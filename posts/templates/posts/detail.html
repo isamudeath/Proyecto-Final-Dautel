@@ -29,7 +29,7 @@
             <hr>
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'Posts'%}';">Volver a Posts</button>
-                {% if user.is_authenticated and user.id == post.autor_id %}
+                {% if user.is_authenticated and user.id == post.autor_id or user.is_staff%}
                 <button type="button" class="btn btn-primary rounded-pill px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'editar_post' post.id %}';">Editar Post</button>
                 <button type="button" class="btn btn-outline-danger px-3" style="padding-left: 5% padding-top: 10%; text-align:left" onclick="window.location.href='{% url 'borrar_post' post.id %}';">Borrar Post</button>
                 {% endif %}

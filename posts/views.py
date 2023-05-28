@@ -91,37 +91,6 @@ def edit_post(request, id):
         context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
     )
 
-# @login_required
-# def edit_post(request, id):
-#     post = Post.objects.get(id=id)
-#     detalle_url = post.get_absolute_url()
-#     if request.method == "POST":
-#         postform = Postform(request.POST, request.FILES, initial={'titulo': post.titulo, 'contenido': post.contenido, 'imagen': post.imagen})
-
-#         if postform.is_valid():
-#             data = postform.cleaned_data
-#             post.titulo = data["titulo"]
-#             post.contenido = data["contenido"]
-#             post.imagen = data["imagen"]
-#             post.fecha_mod = timezone.now()
-#             post.save()
-#             url_exitosa = reverse('detalle', args=[post.id])
-#             return redirect(url_exitosa)
-#     else:  # GET
-#         for field, errors in postform.errors.items():
-#             messages.error(request, f"{', '.join(errors)}")
-#         inicial = {
-#             'titulo': post.titulo,
-#             'contenido': post.contenido,
-#             'imagen': post.imagen
-#         }
-#         postform = Postform(initial=inicial)
-#     return render(
-#         request=request,
-#         template_name='posts/edit-post.html',
-#         context={'postform': postform, 'detalle_url': detalle_url, 'post': post},
-#     )
-
 
 @login_required
 def delete_post(request, id):
